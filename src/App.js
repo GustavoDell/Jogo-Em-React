@@ -3,48 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 class Board extends React.Component{
-    
-  constructor(props){
-      super(props);
-      this.state = {
-          squares : Array(9).fill(null),
-          xIsNext: true,
-      };
-  }
-
-  handleClick(i){
-      const squares = this.state.squares.slice();
-      if(calculateWiner(squares) || squares[i]){
-        return;
-      }
-      squares[i] = this.state.xIsNext ? "X" : "O";
-      this.setState({
-        squares: squares,
-        xIsNext: !this.state.xIsNext,
-      });
-  }
-
+  
   renderSquare(i){
       return (
       <Square 
-        value={this.state.squares[i]}
-        onClick= {() => this.handleClick(i)}
+        value={this.props.squares[i]}
+        onClick= {() => this.props.onClick(i)}
       />
       );
   }
   
   render(){
-    const winner = calculateWiner(this.state.squares);
-    let status;
-
-    if(winner){
-      status = "Vencedor : " + winner;
-    }else{
-      status = "Proximo Jogador : " + (this.state.xIsNext ? "X" : "O")
-    }
       return(
           <div>
-              <div className="status">{status}</div>
               <div className="board-row">
                   {this.renderSquare(0)}
                   {this.renderSquare(1)}
@@ -94,6 +65,32 @@ function calculateWiner(squares){
 }
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      xIsNext: true,
+    };
+  }
+
+  handleClick(i){
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if(calculateWiner(squares) || squares[i]){
+      return;
+    }
+    squares[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      history: history.concat([{
+        squares: squares,
+      }]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+  
   render(){
     return (
       <div className="App">
@@ -103,10 +100,13 @@ class App extends React.Component {
           
           <div className="game">
             <div className="game-board">
-              <Board/>
+              <Board 
+                squares={current.squares}
+                onClick={(i) => this.handleClick(1)}
+              />
             </div>
             <div className="game-info">
-              <div>{/* Status */}</div>
+              <div>{status}</div>
               <ol>{/* TODO */}</ol>
             </div>
 

@@ -20,7 +20,7 @@ code {
   border: 1px solid yellow;
 }
 .board-row{
-  margin: 1px;
+  margin-bottom: -3px;
 }
 .game{
   background-color: lightskyblue;
