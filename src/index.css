@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.square{
+  height: 30px;
+  width: 30px;
+  margin: 0px;
+  background-color: #282c34;
+  color: white;
+  border: 1px solid yellow;
+}
+.board-row{
+  margin: 1px;
+}
+.game{
+  background-color: lightskyblue;
+  border: 1px solid yellow;
+  border-radius: 11px;
+  width: 260px;
+}
+.status{
+  color: #282c34;
+}
+h1{
+  color: yellow;
+}
